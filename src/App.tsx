@@ -24,14 +24,19 @@ const INITIAL_STATE =[
   
 }]
 interface AppState {
-  subs: Array<Sub>
+  subs: Array<Sub>,
+  newSubs: number
 }
 
 
 function App() {
   const [subs, setSubs] = useState <AppState['subs']> ([
  
-  ]) // <number string> antes del () lo convertirian en un tipo dinamico.
+  ]) 
+  // <number string> antes del () lo convertirian en un tipo dinamico.
+  
+  const [newSubs, setnewSubs] = useState <AppState['newSubs']>(0) 
+
   useEffect(()=> setSubs(INITIAL_STATE),[])
 
   return (
