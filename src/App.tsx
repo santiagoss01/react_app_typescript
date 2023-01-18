@@ -1,15 +1,13 @@
 import React from 'react';
 
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useRef ,useEffect } from 'react';
 
-interface Sub{
-  nick:string,
-  subMonths:number,
-  avatar:string,
-  description?:string,
+import List from './components/List'
+import Form from './components/Form'
+import {Sub} from './types';
 
-}
+
 const INITIAL_STATE =[
 {
   nick: 'Lolupo',
@@ -37,28 +35,19 @@ function App() {
   
   const [newSubs, setnewSubs] = useState <AppState['newSubs']>(0) 
 
+  const divRef = useRef<HTMLDivElement>(null)
+
   useEffect(()=> setSubs(INITIAL_STATE),[])
 
+  const handleNewSub = (newSubs: Sub): void =>{
+    setSubs(subs => [...subs, newSubs])
+  }
+
   return (
-    <div className="App">
-      <h1>Mis subs</h1>
-      <ul>
-        {
-          subs.map(sub =>{
-            return(
-              <li key={sub.nick}>
-                <img src={sub.avatar} alt = {`Avatar for ${sub.nick}`}/>
-                <h4>{sub.nick}(<small>{sub.subMonths}</small>)</h4>
-                <p>{sub.description?.substring(0,100)}</p>
-          </li>
-            )
-          })
-        }
-
-      </ul>
-   
-
-    </div>
+    <div className="App" ref={divRef}>
+      <List subs={subs}/>
+      <Form onNewSub={handleNewSub}/>
+   </div>
   );
 }
 
